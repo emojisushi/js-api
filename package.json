@@ -1,0 +1,30 @@
+{
+  "name": "@layerok/emojisushi-js-sdk",
+  "version": "1.0.5",
+  "scripts": {
+    "clean": "rimraf ./dist",
+    "build": "rollup --config"
+  },
+  "main": "./dist/bundle.cjs",
+  "module": "./dist/bundle.js",
+  "types": "./dist/index.d.ts",
+
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "axios": "*"
+  },
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "@rollup/plugin-typescript": "^11.1.6",
+    "prettier": "^3.3.3",
+    "rimraf": "^6.0.1",
+    "rollup": "^4.18.1",
+    "tslib": "^2.6.3",
+    "typescript": "^5.5.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
