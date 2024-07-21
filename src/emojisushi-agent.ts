@@ -183,10 +183,16 @@ export function createEmojisushiAgent(options: { service: string }) {
     return client.post<LoginResData>("auth/login", credentials);
   }
 
-  function restorePassword(email: string) {
+  function restorePassword({
+    email,
+    redirect_url,
+  }: {
+    email: string;
+    redirect_url: string;
+  }) {
     return client.post("auth/restore-password", {
       email,
-      redirect_url: window.location.origin + "/reset-password",
+      redirect_url,
     });
   }
 
