@@ -93,21 +93,25 @@ export function createEmojisushiAgent(options: { service: string }) {
     variant_id?: number;
     quantity: number;
   }): Promise<IGetCartRes> {
-    return client.post("cart/add", data, {
-      skipAuthRefresh: true,
-    } as AxiosAuthRefreshRequestConfig);
+    return client
+      .post<IGetCartRes>("cart/add", data, {
+        skipAuthRefresh: true,
+      } as AxiosAuthRefreshRequestConfig)
+      .then((res) => res.data);
   }
 
   function removeCartProduct(cart_product_id: string): Promise<IGetCartRes> {
-    return client.post(
-      "cart/remove",
-      {
-        cart_product_id,
-      },
-      {
-        skipAuthRefresh: true,
-      } as AxiosAuthRefreshRequestConfig,
-    );
+    return client
+      .post<IGetCartRes>(
+        "cart/remove",
+        {
+          cart_product_id,
+        },
+        {
+          skipAuthRefresh: true,
+        } as AxiosAuthRefreshRequestConfig,
+      )
+      .then((res) => res.data);
   }
 
   function clearCart(data = {}) {
