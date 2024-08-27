@@ -1,4 +1,4 @@
-import {AxiosRequestConfig} from "axios";
+import { AxiosRequestConfig } from "axios";
 
 export type IMeta = {
   total: number;
@@ -23,7 +23,6 @@ export type IFile = {
 };
 
 export type Nullable<Type> = Type | null;
-
 
 export type ICategory = {
   id: number;
@@ -658,6 +657,5 @@ export type IGetSpotsRes = {
 };
 
 export type AxiosAuthRefreshRequestConfig = AxiosRequestConfig & {
-  skipAuthRefresh: boolean
-}
-
+  skipAuthRefresh?: boolean;
+};

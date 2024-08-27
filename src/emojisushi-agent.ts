@@ -39,68 +39,93 @@ export function createEmojisushiAgent(options: { service: string }) {
     });
   }
 
-  function getProducts(params: IGetProductsParams, signal?: AbortSignal) {
+  function getProducts(
+    params: IGetProductsParams,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<IGetProductsRes>("products", {
       params,
-      signal,
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getCategories(params: IGetCategoriesParams) {
+  function getCategories(
+    params: IGetCategoriesParams,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<IGetCategoriesRes>("categories", {
       params,
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getIngredients(params = {}) {
+  function getIngredients(
+    params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get("ingredients", {
       params,
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function placeOrder(params: {
-    phone: string;
-    firstname?: string; // це ім'я зберігаеться на сайті
-    lastname?: string;
-    email?: string;
+  function placeOrder(
+    params: {
+      phone: string;
+      firstname?: string; // це ім'я зберігаеться на сайті
+      lastname?: string;
+      email?: string;
 
-    shipping_method_id: number;
-    payment_method_id: number;
-    spot_id: number;
-    address?: string;
+      shipping_method_id: number;
+      payment_method_id: number;
+      spot_id: number;
+      address?: string;
 
-    comment?: string;
-    sticks?: number;
-    change?: string;
-  }) {
-    return client.post("order/place", params);
+      comment?: string;
+      sticks?: number;
+      change?: string;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("order/place", params, axiosConfig);
   }
 
-  function getCartProducts(params = {}) {
+  function getCartProducts(
+    params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client
       .get<IGetCartRes>("cart/products", {
         params,
         skipAuthRefresh: true,
+        ...axiosConfig,
       } as AxiosAuthRefreshRequestConfig)
       .then((res) => res.data);
   }
 
-  function addCartProduct(data: {
-    product_id: number;
-    variant_id?: number;
-    quantity: number;
-  }): Promise<IGetCartRes> {
+  function addCartProduct(
+    data: {
+      product_id: number;
+      variant_id?: number;
+      quantity: number;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ): Promise<IGetCartRes> {
     return client
       .post<IGetCartRes>("cart/add", data, {
         skipAuthRefresh: true,
+        ...axiosConfig,
       } as AxiosAuthRefreshRequestConfig)
       .then((res) => res.data);
   }
 
-  function removeCartProduct(cart_product_id: string): Promise<IGetCartRes> {
+  function removeCartProduct(
+    cart_product_id: string,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ): Promise<IGetCartRes> {
     return client
       .post<IGetCartRes>(
         "cart/remove",
@@ -109,50 +134,73 @@ export function createEmojisushiAgent(options: { service: string }) {
         },
         {
           skipAuthRefresh: true,
+          ...axiosConfig,
         } as AxiosAuthRefreshRequestConfig,
       )
       .then((res) => res.data);
   }
 
-  function clearCart(data = {}) {
+  function clearCart(
+    data = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.post<IGetCartRes>("cart/clear", data, {
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
   function getPaymentMethods(
     params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
   ): Promise<AxiosResponse<IGetPaymentMethodsRes>> {
     return client.get("payments", {
       params,
+      ...axiosConfig,
     });
   }
 
-  function addWishlistItem(params: {
-    product_id: number;
-    quantity?: number | null;
-  }) {
+  function addWishlistItem(
+    params: {
+      product_id: number;
+      quantity?: number | null;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get("wishlist/add", {
       params,
+      ...axiosConfig,
     });
   }
-  function getWishlists() {
-    return client.get<IGetWishlistRes>("wishlist/list");
+  function getWishlists(
+    params: {} = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.get<IGetWishlistRes>("wishlist/list", {
+      params,
+      ...axiosConfig,
+    });
   }
 
   function getShippingMethods(
     params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
   ): Promise<AxiosResponse<IGetShippingMethodsRes>> {
     return client.get("shipping", {
       params,
+      ...axiosConfig,
     });
   }
 
-  function getBanners(params = {}) {
+  function getBanners(
+    params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client
       .get<IGetBannersRes>("banners", {
         params,
         skipAuthRefresh: true,
+        ...axiosConfig,
       } as AxiosAuthRefreshRequestConfig)
       .then((res) => res.data);
   }
@@ -164,141 +212,182 @@ export function createEmojisushiAgent(options: { service: string }) {
       password_confirmation: string;
       name: string;
       surname: string;
+      activate: boolean;
+      auto_login: boolean;
       agree: boolean;
     },
-    activate = true,
-    autoLogin = true,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
   ) {
-    const { email, password, password_confirmation, name, surname, agree } =
-      data;
-    return client.post<RegisterResData>("auth/register", {
-      email,
-      password,
-      password_confirmation,
-      name,
-      agree,
-      surname,
-      activate,
-      auto_login: autoLogin,
+    return client.post<RegisterResData>("auth/register", data, axiosConfig);
+  }
+
+  function login(
+    data: { email: string; password: string },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post<LoginResData>("auth/login", data, axiosConfig);
+  }
+
+  function restorePassword(
+    data: {
+      email: string;
+      redirect_url: string;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("auth/restore-password", data, axiosConfig);
+  }
+
+  function resetPassword(
+    data: { code: string; password: string },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("auth/reset-password", data, axiosConfig);
+  }
+
+  function updateUserPassword(
+    data: {
+      password_old: string;
+      password: string;
+      password_confirmation: string;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("user/password", data, axiosConfig);
+  }
+
+  function fetchUser(
+    params: {} = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.get<IFetchUserResData>("user", {
+      params,
+      ...axiosConfig,
     });
   }
 
-  function login(credentials: { email: string; password: string }) {
-    return client.post<LoginResData>("auth/login", credentials);
+  function updateUser(
+    data: {
+      name?: string;
+      surname?: string;
+      phone?: string;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("user", data, axiosConfig);
   }
 
-  function restorePassword({
-    email,
-    redirect_url,
-  }: {
-    email: string;
-    redirect_url: string;
-  }) {
-    return client.post("auth/restore-password", {
-      email,
-      redirect_url,
-    });
+  function updateCustomer(
+    data: { firstname?: string; lastname?: string },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("user/customer", data, axiosConfig);
   }
 
-  function resetPassword(data: { code: string; password: string }) {
-    return client.post("auth/reset-password", data);
+  function addAddress(
+    data: {
+      name: string;
+      lines: string;
+      zip: string;
+      city: string;
+      two_letters_country_code?: string;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post<IAddress>("user/address", data, axiosConfig);
   }
 
-  function updateUserPassword(data: {
-    password_old: string;
-    password: string;
-    password_confirmation: string;
-  }) {
-    return client.post("user/password", data);
-  }
-
-  function fetchUser() {
-    const config = {
-      params: {},
-    };
-    return client.get<IFetchUserResData>("user", config);
-  }
-
-  function updateUser(data: {
-    name?: string;
-    surname?: string;
-    phone?: string;
-  }) {
-    return client.post("user", data);
-  }
-
-  function updateCustomer(data: { firstname?: string; lastname?: string }) {
-    return client.post("user/customer", data);
-  }
-
-  function addAddress(data: {
-    name: string;
-    lines: string;
-    zip: string;
-    city: string;
-    two_letters_country_code?: string;
-  }) {
-    return client.post<IAddress>("user/address", data);
-  }
-
-  function deleteAddress(id: number) {
+  function deleteAddress(
+    data: {
+      id: number;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.delete("user/address", {
-      data: {
-        id,
-      },
+      data,
+      ...axiosConfig,
     });
   }
 
-  function makeAddressDefault(id: number) {
-    return client.post("user/address/default", {
-      id,
-    });
+  function makeAddressDefault(
+    data: {
+      id: number;
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("user/address/default", data, axiosConfig);
   }
 
   const getCitiesDefaults: IGetCitiesParams = {
     includeSpots: false,
   };
 
-  function getSpots(params = {}) {
+  function getSpots(
+    params = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client
       .get<IGetSpotsRes>("spots", {
         params,
         skipAuthRefresh: true,
+        ...axiosConfig,
       } as AxiosAuthRefreshRequestConfig)
       .then((res) => res.data);
   }
 
-  function getSpot(params: { slug_or_id: string | number }) {
+  function getSpot(
+    params: { slug_or_id: string | number },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<ISpot>("spot", {
       params,
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getMainSpot() {
+  function getMainSpot(
+    params: {} = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<ISpot>("spot-main", {
       skipAuthRefresh: true,
+      params,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getCity(params: { slug_or_id: string | number }) {
+  function getCity(
+    params: { slug_or_id: string | number },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<ICity>("city", {
       params,
       skipAuthRefresh: true,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getMainCity() {
+  function getMainCity(
+    params: {} = {},
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client.get<ICity>("city-main", {
       skipAuthRefresh: true,
+      params,
+      ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
   }
 
-  function getCities(params: IGetCitiesParams = getCitiesDefaults) {
+  function getCities(
+    params: IGetCitiesParams = getCitiesDefaults,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
     return client
       .get<IGetCitiesRes>("cities", {
         params,
         skipAuthRefresh: true,
+        ...axiosConfig,
       } as AxiosAuthRefreshRequestConfig)
       .then((res) => res.data);
   }
