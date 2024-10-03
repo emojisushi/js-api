@@ -5,11 +5,22 @@
 yarn add @layerok/emojisushi-js-sdk
 ```
 
+## Servers
+| Server     | URL                               |
+|------------|-----------------------------------|  
+| Production | https://api.emojisushi.com.ua/api |
+
+
+## Usage
+
 ```typescript
 const agent = createEmojisushiAgent({
   service: "https://example.com"
 })
+```
 
+### Methods
+```typescript
 agent.getProducts()
 agent.getCategories()
 agent.getIngredients()
