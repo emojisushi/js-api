@@ -6,9 +6,10 @@ yarn add @layerok/emojisushi-js-sdk
 ```
 
 ## Servers
-| Server     | URL                               |
-|------------|-----------------------------------|  
-| Production | https://api.emojisushi.com.ua/api |
+| Server     | URL                                     |
+|------------|-----------------------------------------|  
+| Production | https://api.emojisushi.com.ua/api       |
+| Staging    | https://stage-api.emojisushi.com.ua/api |
 
 
 ## Usage
