@@ -93,6 +93,35 @@ export function createEmojisushiAgent(options: { service: string }) {
     return client.post("order/place", params, axiosConfig);
   }
 
+  function placeOrderV2(
+    params: {
+      phone: string;
+      firstname?: string;
+      lastname?: string;
+      email?: string;
+
+      shipping_method_id: number;
+      payment_method_id: number;
+      spot_id: number;
+      address?: string;
+
+      comment?: string;
+      sticks?: number;
+      change?: string;
+
+      cart: {
+        items: {
+          id: string;
+          variant_id?: string;
+          quantity: number;
+        }[];
+      };
+    },
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.post("order/v2/place", params, axiosConfig);
+  }
+
   function getCartProducts(
     params = {},
     axiosConfig: AxiosAuthRefreshRequestConfig = {},
@@ -398,6 +427,7 @@ export function createEmojisushiAgent(options: { service: string }) {
     getCategories,
     getIngredients,
     placeOrder,
+    placeOrderV2,
     getCartProducts,
     addCartProduct,
     removeCartProduct,
