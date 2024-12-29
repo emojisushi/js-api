@@ -54,3 +54,8 @@ agent.getSpot()
 agent.getSpots()
 agent.log()
 ```
+
+## Publishing to npm
+1. bump version
+2. yarn build
+3. npm publish

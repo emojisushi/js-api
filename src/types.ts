@@ -633,7 +633,7 @@ export type ICity = {
   spots: ISpot[];
   frontend_url: string;
   google_map_url: string;
-  phones: string;
+  phones: string | null;
   html_content: string;
   districts: IDistrict[];
   temporarily_unavailable: boolean;
