@@ -1,6 +1,6 @@
 {
   "name": "@layerok/emojisushi-js-sdk",
-  "version": "1.0.12",
+  "version": "1.0.14",
   "scripts": {
     "clean": "rimraf ./dist",
     "build": "rollup --config"

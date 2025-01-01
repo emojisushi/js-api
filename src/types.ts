@@ -251,6 +251,13 @@ export type IGetProductsRes = {
   filters: IFilter[];
 };
 
+export type IGetCatalogRes = {
+  categories: ICategory[];
+  products: IProduct[];
+  wishlists: IWishlist[];
+  sort_options: string[];
+};
+
 export type ICartProduct = {
   quantity: number;
   product: IProduct;

@@ -19,6 +19,7 @@ import {
   ISpot,
   ICity,
   IGetCitiesRes,
+  IGetCatalogRes,
 } from "./types";
 
 export function createEmojisushiAgent(options: { service: string }) {
@@ -48,6 +49,16 @@ export function createEmojisushiAgent(options: { service: string }) {
       skipAuthRefresh: true,
       ...axiosConfig,
     } as AxiosAuthRefreshRequestConfig);
+  }
+
+  function getCatalog(
+    params: any,
+    axiosConfig: AxiosAuthRefreshRequestConfig = {},
+  ) {
+    return client.get<IGetCatalogRes>("catalog", {
+      params,
+      ...axiosConfig,
+    });
   }
 
   function getCategories(
@@ -424,6 +435,7 @@ export function createEmojisushiAgent(options: { service: string }) {
   return {
     axiosClient,
     getProducts,
+    getCatalog,
     getCategories,
     getIngredients,
     placeOrder,

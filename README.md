@@ -23,6 +23,7 @@ const agent = createEmojisushiAgent({
 ### Methods
 ```typescript
 agent.getProducts()
+agent.getCatalog();
 agent.getCategories()
 agent.getIngredients()
 agent.placeOrder()
