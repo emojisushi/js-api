@@ -254,6 +254,7 @@ export type IGetProductsRes = {
 export type IGetCatalogRes = {
   categories: ICategory[];
   products: IProduct[];
+  banners: Banner[];
   wishlists: IWishlist[];
   sort_options: string[];
 };
