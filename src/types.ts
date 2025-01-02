@@ -259,6 +259,12 @@ export type IGetCatalogRes = {
   sort_options: string[];
 };
 
+export type IGetCheckoutFormRes = {
+  payment_methods: IPaymentMethod[];
+  shipping_methods: IShippingMethod[];
+  spots: ISpot[];
+};
+
 export type ICartProduct = {
   quantity: number;
   product: IProduct;
