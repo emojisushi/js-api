@@ -15,7 +15,6 @@ yarn add @layerok/emojisushi-js-sdk
 
 ## Usage
 
-
 ```typescript
 const agent = createEmojisushiAgent({
   service: "https://example.com"
