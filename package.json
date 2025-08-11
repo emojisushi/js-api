@@ -8,12 +8,12 @@
   "main": "./dist/bundle.cjs",
   "module": "./dist/bundle.js",
   "types": "./dist/index.d.ts",
-
   "files": [
     "dist"
   ],
   "dependencies": {
-    "axios": "*"
+    "axios": "*",
+    "semantic-release": "^24.2.7"
   },
   "devDependencies": {
     "@rollup/plugin-terser": "^0.4.4",
