@@ -635,7 +635,7 @@ export type ISpot = {
 export type IDistrict = {
   id: number;
   name: string;
-  spots: ISpot[];
+  spot: ISpot;
   city: ICity;
   temporarily_unavailable: boolean;
 };
