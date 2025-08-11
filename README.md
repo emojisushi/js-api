@@ -20,6 +20,7 @@ const agent = createEmojisushiAgent({
 })
 ```
 
+
 ### Methods
 ```typescript
 agent.getProducts()
